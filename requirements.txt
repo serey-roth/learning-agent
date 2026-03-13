@@ -1,0 +1,6 @@
+# Ingestion
+pymupdf4llm
+chromadb
+sentence-transformers  # local embeddings (bge-small-en-v1.5)
+bm25s
+tiktoken
