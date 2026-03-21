@@ -51,7 +51,7 @@ The V2 CLI works as a demo but fails as a daily study tool:
 ## User Stories
 
 | # | As a student, I want to... | So that... |
-|---|---|---|
+| --- | --- | --- |
 | 1 | See slide images and formulas in answers | I understand visually-dense content |
 | 2 | Ask questions that go beyond the slides | I can learn deeper than the lecturer wrote |
 | 3 | Get different question types, not just MCQ | I'm tested in ways that match the exam |
@@ -63,6 +63,7 @@ The V2 CLI works as a demo but fails as a daily study tool:
 ## Scope
 
 **In:**
+
 - Web UI (Streamlit for v3, FastAPI + React in v4)
 - Ingest: slide image extraction, formula preservation
 - Beyond-slides mode — toggle between slide-grounded and extended answers
@@ -70,6 +71,7 @@ The V2 CLI works as a demo but fails as a daily study tool:
 - Session memory across runs (conversations + quiz history)
 
 **Out:**
+
 - Learner model, spaced repetition, adaptive difficulty
 - Calendar or portal integration
 - Agent-to-agent communication
@@ -92,7 +94,7 @@ The V2 CLI works as a demo but fails as a daily study tool:
 ## Key Risks
 
 | Risk | Mitigation |
-|---|---|
+| --- | --- |
 | Formula extraction from PDFs is lossy | Flag math-heavy slides; preserve raw text layer |
 | Free response grading is inconsistent | Strict rubric prompt; show raw model feedback to user |
 | Beyond-slides mode produces ungrounded answers | Show "beyond slides" indicator clearly in UI when active |

@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from src.config import ORCHESTRATOR_MODEL
-
 _anthropic = anthropic.Anthropic()
+
+ORCHESTRATOR_MODEL = 'claude-haiku-4-5'
 
 ORCHESTRATOR_PROMPT = """\
 You are a routing agent. Classify the user's latest message into exactly one intent.
