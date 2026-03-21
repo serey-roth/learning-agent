@@ -1,10 +1,3 @@
-"""app.py — CLI chat for slide RAG.
-
-Usage:
-    python -m src.app                  # pick decks interactively, then chat
-    python -m src.app --deck week1     # skip deck selection, use one deck
-"""
-
 import argparse
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -15,9 +8,9 @@ load_dotenv()
 from src.agents.orchestrator import classify
 from src.agents.qa import ask_question
 from src.agents.quiz import generate_quiz, run_quiz
+from src.state import SessionState
 
 DECKS_DIR = Path("data/decks")
-MAX_HISTORY_TURNS = 6
 
 
 def list_decks() -> list[str]:
@@ -54,25 +47,10 @@ def select_decks() -> str | list[str] | None:
 
 RECENT_QUERIES_LIMIT = 3
 
-@dataclass
-class SessionState:
-    history: list[dict] = field(default_factory=list)
-    recent_queries: list[str] = field(default_factory=list)
-
-    def add(self, role: str, content: str) -> None:
-        self.history.append({"role": role, "content": content})
-        if len(self.history) > MAX_HISTORY_TURNS * 2:
-            self.history = self.history[-(MAX_HISTORY_TURNS * 2):]
-
-    def add_query(self, query: str) -> None:
-        self.recent_queries.append(query)
-        if len(self.recent_queries) > RECENT_QUERIES_LIMIT:
-            self.recent_queries = self.recent_queries[-RECENT_QUERIES_LIMIT:]
-
 
 def _ask_question(query: str, state: SessionState, deck_filter: str | list[str] | None) -> None:
     print("\nAssistant: ", end="", flush=True)
-    response, citations = ask_question(query, state.history, deck_filter)
+    response, citations = ask_question(query, state.history, deck_filter, on_stream=lambda token: print(token, end="", flush=False))
     if citations:
         print(f"Sources: {', '.join(f'[{c}]' for c in citations)}")
     print()
